@@ -18,4 +18,12 @@ public class DiaryService {
         return diaryRepository.findAll();
     }
 
+    void deleteDiary(final long id) {
+        diaryRepository.delete(id);
+    }
+
+    void patchDiary(final long id, final String body){
+        final Diary diary = new Diary(id,body);
+        diaryRepository.patch(diary);
+    }
 }

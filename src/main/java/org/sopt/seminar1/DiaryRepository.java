@@ -13,10 +13,19 @@ public class DiaryRepository {
     private final AtomicLong numbering = new AtomicLong();
 
     void save(final Diary diary){
-        // 채번 과정
+        // id 값 부여
         final long id = numbering.addAndGet(1);
 
         // 저장 과정
+        storage.put(id,diary.getBody());
+    }
+
+    void delete(final long id){
+        storage.remove(id);
+    }
+
+    void patch(final Diary diary) {
+        final long id = diary.getId();
         storage.put(id,diary.getBody());
     }
 
@@ -29,7 +38,9 @@ public class DiaryRepository {
             final String body =  storage.get(index);
 
             // 2-1. 불러온 값을 구성한 자료구조로 이관
-            diaryList.add(new Diary(index,body));
+            if (body != null) { // 2-2. 삭제되어 null 값인 경우 불러오지 않음
+                diaryList.add(new Diary(index, body));
+            }
         }
         // 3. 불러온 자료구조를 응답
         return diaryList;

@@ -32,11 +32,14 @@ public class DiaryController {
     }
 
     final void delete(final String id) {
-
+        long diaryId = Long.parseLong(id);
+        diaryService.deleteDiary(diaryId);
     }
 
     final void patch(final String id, final String body) {
-
+        long diaryId = Long.parseLong(id);
+        diaryService.deleteDiary(diaryId);
+        diaryService.patchDiary(diaryId,body);
     }
 
     enum Status {

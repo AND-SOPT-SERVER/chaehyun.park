@@ -9,9 +9,9 @@ import java.util.List;
 public class DiaryService {
     private final DiaryRepository diaryRepository = new DiaryRepository();
 
-    void writeDiary(final String body) {
+    boolean writeDiary(final String body) {
         final Diary diary = new Diary(null,body);
-        diaryRepository.save(diary);
+        return diaryRepository.save(diary);
     }
 
     List<Diary> getDiaryList(){
@@ -22,8 +22,20 @@ public class DiaryService {
         diaryRepository.delete(id);
     }
 
-    void patchDiary(final long id, final String body){
+    boolean patchDiary(final long id, final String body){
         final Diary diary = new Diary(id,body);
-        diaryRepository.patch(diary);
+        return diaryRepository.patch(diary);
+    }
+
+    void restoreDiary(final long id){
+        diaryRepository.restore(id);
+    }
+
+    void saveToFile(){
+        diaryRepository.saveToFile();
+    }
+
+    void loadFromFile(){
+        diaryRepository.loadFromFile();
     }
 }

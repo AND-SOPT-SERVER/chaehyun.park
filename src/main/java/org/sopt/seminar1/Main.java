@@ -77,7 +77,13 @@ public class Main {
                         case "POST" -> {
                             ConsoleIO.printLine("한 줄 일기를 작성해주세요!");
                             final String input = ConsoleIO.readLine();
-                            server.post(input);
+
+                            boolean posted = server.post(input);
+                            if (posted) {
+                                ConsoleIO.printLine("일기가 성공적으로 작성되었습니다.");
+                            } else {
+                                ConsoleIO.printLine("한 줄 일기는 30자까지 입력 가능합니다.");
+                            }
                         }
 
                         case "DELETE" -> {
@@ -92,7 +98,18 @@ public class Main {
                             ConsoleIO.printLine("수정 body 를 입력하세요!");
                             final String inputBody = ConsoleIO.readLine();
 
-                            server.patch(inputId, inputBody);
+                            boolean patched  = server.patch(inputId, inputBody);
+                            if(patched) {
+                                ConsoleIO.printLine("일기가 성공적으로 수정되었습니다.");
+                            } else {
+                                ConsoleIO.printLine("오늘 수정 횟수를 초과했습니다.");
+                                server.restore(inputId);
+                            }
+                        }
+                        case "RESTORE" -> {
+                            ConsoleIO.printLine("복구할 id 를 입력하세요!");
+                            final String input = ConsoleIO.readLine();
+                            server.restore(input);
                         }
                         case "FINISH" -> {
                             server.finish();
@@ -125,6 +142,7 @@ public class Main {
                     - POST : 일기 작성하기
                     - DELETE : 일기 제거하기
                     - PATCH : 일기 수정하기
+                    - RESTORE : 일기 복구하기
                     """;
 
         }

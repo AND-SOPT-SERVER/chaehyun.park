@@ -2,6 +2,8 @@ package org.sopt.diary.repository;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class DiaryEntity {
     @Id
@@ -15,6 +17,9 @@ public class DiaryEntity {
     @Column
     public String content;
 
+    @Column
+    public LocalDateTime dateTime;
+
     public DiaryEntity(){
     }
 
@@ -23,6 +28,11 @@ public class DiaryEntity {
         this.content = content;
     }
 
+    //사용자가 직접 날짜를 입력할 필요 없이, 저장 시점의 현재 시간을 기록
+    @PrePersist
+    protected void onCreate() {
+        this.dateTime = LocalDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -35,5 +45,9 @@ public class DiaryEntity {
 
     public String getContent(){
         return content;
+    }
+
+    public LocalDateTime getDateTime(){
+        return dateTime;
     }
 }

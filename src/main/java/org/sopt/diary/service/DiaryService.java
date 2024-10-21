@@ -1,5 +1,6 @@
 package org.sopt.diary.service;
 
+import org.sopt.diary.api.DiaryDetailResponse;
 import org.sopt.diary.repository.DiaryEntity;
 import org.sopt.diary.repository.DiaryRepository;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ public class DiaryService {
         this.diaryRepository = diaryRepository;
     }
 
+    // 반환 타입이 없기에 -> void
     public void createDiary(String title, String content) {
         if (content.length() > 30) {
             throw new IllegalArgumentException("내용은 30자를 넘길 수 없습니다.");
@@ -38,4 +40,9 @@ public class DiaryService {
         return diaryList;
     }
 
+    public DiaryDetailResponse getDiaryDetail(long id){
+        DiaryEntity diaryEntity = diaryRepository.findById(id);
+
+        return new DiaryDetailResponse(diaryEntity.getId(), diaryEntity.getTitle(), diaryEntity.getContent(), diaryEntity.getDateTime());
+    }
 }

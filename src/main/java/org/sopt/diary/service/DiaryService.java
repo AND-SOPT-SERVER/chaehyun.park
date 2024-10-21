@@ -24,6 +24,15 @@ public class DiaryService {
         diaryRepository.save(new DiaryEntity(title, content));
     }
 
+    public void updateDiary(long id, String content) {
+        DiaryEntity diaryEntity = diaryRepository.findById(id);
+        if (content.length() > 30) {
+            throw new IllegalArgumentException("내용은 30자를 넘길 수 없습니다.");
+        }
+        diaryEntity.setContent(content);
+        diaryRepository.save(diaryEntity);
+    }
+
     public List<Diary> getList() {
         // (1) repository로 부터 DiaryEntity 를 가져옴
         final List<DiaryEntity> diaryEntityList = diaryRepository.findTop10ByOrderByIdDesc();

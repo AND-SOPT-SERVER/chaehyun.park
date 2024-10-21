@@ -28,6 +28,16 @@ public class DiaryController {
         }
     }
 
+    @PatchMapping("/diary/{id}")
+    ResponseEntity<String> patch(@PathVariable long id, @RequestBody DiaryRequest request) {
+        try {
+            diaryService.updateDiary(id, request.getContent());
+            return ResponseEntity.ok("일기가 성공적으로 수정되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/diaries")
     ResponseEntity<DiaryListResponse> getDiary() {
         // Service로부터 가져온 DiaryList
@@ -48,4 +58,5 @@ public class DiaryController {
         DiaryDetailResponse diaryResponseDetail = diaryService.getDiaryDetail(id);
         return ResponseEntity.ok(diaryResponseDetail);
     }
+
 }

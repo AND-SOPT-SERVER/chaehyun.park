@@ -43,8 +43,15 @@ public class DiaryEntity {
         return title;
     }
 
+    // Getter (getContent)
+    // 역할: 객체의 필드 값을 가져와 보여줌
     public String getContent(){
         return content;
+    }
+    // Setter (setContent)
+    // 역할: 객체의 필드 값을 변경하는 메서드, 외부에서 객체의 상태를 변경하고 싶을 때 사용
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public LocalDateTime getDateTime(){

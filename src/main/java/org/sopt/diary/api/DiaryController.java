@@ -38,6 +38,12 @@ public class DiaryController {
         }
     }
 
+    @DeleteMapping("/diary/{id}")
+    ResponseEntity<String> delete(@PathVariable long id){
+        diaryService.deleteDiary(id);
+        return ResponseEntity.ok("일기가 성공적으로 삭제되었습니다.");
+    }
+
     @GetMapping("/diaries")
     ResponseEntity<DiaryListResponse> getDiary() {
         // Service로부터 가져온 DiaryList

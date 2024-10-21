@@ -33,6 +33,11 @@ public class DiaryService {
         diaryRepository.save(diaryEntity);
     }
 
+    public void deleteDiary(long id){
+        DiaryEntity diaryEntity = diaryRepository.findById(id);
+        diaryRepository.deleteById(id);
+    }
+
     public List<Diary> getList() {
         // (1) repository로 부터 DiaryEntity 를 가져옴
         final List<DiaryEntity> diaryEntityList = diaryRepository.findTop10ByOrderByIdDesc();
